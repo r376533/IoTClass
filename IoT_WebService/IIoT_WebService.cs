@@ -44,8 +44,8 @@ namespace IoT_WebService
 
         #region DHT22
         [OperationContract]
-        [WebGet(UriTemplate = "SetDHT22/{Account}/{Password}/{Temp}/{Hum}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        ExecuteResult SetDHT22(string Account,string Password,string ClientIP,double Temp,double Hum);
+        [WebGet(UriTemplate = "SetDHT22/{Account}/{Password}/{ClientIP}/{Temp}/{Hum}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ExecuteResult SetDHT22(string Account,string Password,string ClientIP,string Temp,string Hum);
         #endregion
 
 

@@ -118,6 +118,7 @@ namespace IoT_Lib
             newLog.Data = Data;
             newLog.IsVerification = IsVerification;
             db.Task_Log.Add(newLog);
+            db.SaveChanges();
         }
 
     }

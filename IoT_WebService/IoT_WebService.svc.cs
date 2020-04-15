@@ -112,7 +112,7 @@ namespace IoT_WebService
         #endregion
 
         #region DHT22
-        public ExecuteResult SetDHT22(string Account, string Password, string ClientIP, double Temp, double Hum)
+        public ExecuteResult SetDHT22(string Account, string Password, string ClientIP, string Temp, string Hum)
         {
             Guid TaskID = Guid.Parse("65319464-E3FC-494E-8B63-654F844930CE");
             ExecuteResult result = new ExecuteResult();
@@ -123,7 +123,7 @@ namespace IoT_WebService
                     //正常
                     int x = new Random(DateTime.Now.GetHashCode()).Next(0, 3);
                     int IsVerification = 1;
-                    string Data = JsonConvert.SerializeObject(new DHT22(Temp, Hum));
+                    string Data = JsonConvert.SerializeObject(new DHT22(Convert.ToDouble(Temp), Convert.ToDouble(Hum)));
                     //產生隨機失敗碼
                     if (x != 2)
                     {
@@ -136,7 +136,7 @@ namespace IoT_WebService
                     {
                         result.Code = -5;
                         result.Message = "請再傳送一次";
-                        IsVerification = -1;
+                        IsVerification = -2;
                     }
                     Db.AddTaskLog(TaskID, Account, ClientIP, Data, IsVerification);
                     break;
