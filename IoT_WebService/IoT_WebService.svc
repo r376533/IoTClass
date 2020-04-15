@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="IoT_WebService.IoT_WebService" CodeBehind="IoT_WebService.svc.cs" %>
