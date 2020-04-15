@@ -15,6 +15,13 @@ namespace IoT_WebService
     [ServiceContract]
     public interface IIoT_WebService
     {
+        #region Task
+        [OperationContract]
+        [WebGet(UriTemplate = "GetAllTask", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ExecuteResult GetAllTask();
+        #endregion
+
+
         #region Student
 
         [OperationContract]

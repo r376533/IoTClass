@@ -23,6 +23,10 @@ namespace IoT_WebService
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerSession, IncludeExceptionDetailInFaults = true)]
     public class IoT_WebService : IIoT_WebService
     {
+        #region Task
+        
+        #endregion
+
         #region Student
         public ExecuteResult GetAllStudent()
         {
@@ -203,7 +207,13 @@ namespace IoT_WebService
             return IP;
         }
 
-
-
+        public ExecuteResult GetAllTask()
+        {
+            DataBaseProcesser Db = new DataBaseProcesser();
+            ExecuteResult result = new ExecuteResult();
+            List<Task> All_Task = Db.GetAllTask();
+            result.Result = JsonConvert.SerializeObject(All_Task);
+            return result;
+        }
     }
 }

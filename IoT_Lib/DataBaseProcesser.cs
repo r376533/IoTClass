@@ -121,5 +121,12 @@ namespace IoT_Lib
             db.SaveChanges();
         }
 
+
+        public List<Task> GetAllTask() 
+        {
+            List<Task> Result;
+            Result = db.Task.ToList();
+            return Result;
+        }
     }
 }
