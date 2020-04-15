@@ -128,5 +128,12 @@ namespace IoT_Lib
             Result = db.Task.ToList();
             return Result;
         }
+
+        public List<Task_Log> GetTaskLogByAccount(Guid TaskID, string Account) 
+        {
+            List<Task_Log> Result = new List<Task_Log>();
+            Result = db.Task_Log.Where(m => m.TaskID == TaskID && m.UpdateStudent == Account && m.IsVerification > 0).ToList();
+            return Result;
+        }
     }
 }

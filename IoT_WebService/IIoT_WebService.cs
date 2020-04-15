@@ -21,7 +21,6 @@ namespace IoT_WebService
         ExecuteResult GetAllTask();
         #endregion
 
-
         #region Student
 
         [OperationContract]
@@ -55,6 +54,11 @@ namespace IoT_WebService
         ExecuteResult SetDHT22(string Account,string Password,string ClientIP,string Temp,string Hum);
         #endregion
 
+        #region TaskLog
+        [OperationContract]
+        [WebGet(UriTemplate = "GetTaskLog/{Account}/{Password}/{TaskID}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ExecuteResult GetTaskLog(string Account,string Password,string TaskID);
+        #endregion
 
     }
 

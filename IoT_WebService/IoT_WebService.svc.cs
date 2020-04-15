@@ -24,7 +24,14 @@ namespace IoT_WebService
     public class IoT_WebService : IIoT_WebService
     {
         #region Task
-        
+        public ExecuteResult GetAllTask()
+        {
+            DataBaseProcesser Db = new DataBaseProcesser();
+            ExecuteResult result = new ExecuteResult();
+            List<Task> All_Task = Db.GetAllTask();
+            result.Result = JsonConvert.SerializeObject(All_Task);
+            return result;
+        }
         #endregion
 
         #region Student
@@ -183,7 +190,31 @@ namespace IoT_WebService
         }
         #endregion
 
-
+        #region TaskLog
+        public ExecuteResult GetTaskLog(string Account, string Password, string TaskID)
+        {
+            ExecuteResult result = new ExecuteResult();
+            DataBaseProcesser Db = new DataBaseProcesser();
+            switch (Db.LogIn(Account, Password))
+            {
+                case 1:
+                    //正常
+                    Guid TaskID_Guid = Guid.Parse(TaskID);
+                    List<Task_Log> Logs = Db.GetTaskLogByAccount(TaskID_Guid, Account);
+                    result.Result = JsonConvert.SerializeObject(Logs);
+                    break;
+                case -1:
+                    result.Code = -1;
+                    result.Message = "無此帳號";
+                    break;
+                case -2:
+                    result.Code = -2;
+                    result.Message = "密碼錯誤";
+                    break;
+            }
+            return result;
+        }
+        #endregion
 
 
         private string GetClientIP() 
@@ -207,13 +238,8 @@ namespace IoT_WebService
             return IP;
         }
 
-        public ExecuteResult GetAllTask()
-        {
-            DataBaseProcesser Db = new DataBaseProcesser();
-            ExecuteResult result = new ExecuteResult();
-            List<Task> All_Task = Db.GetAllTask();
-            result.Result = JsonConvert.SerializeObject(All_Task);
-            return result;
-        }
+        
+
+        
     }
 }
