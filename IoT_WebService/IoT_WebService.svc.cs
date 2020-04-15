@@ -124,13 +124,21 @@ namespace IoT_WebService
                     int x = new Random(DateTime.Now.GetHashCode()).Next(0, 3);
                     int IsVerification = 1;
                     string Data = JsonConvert.SerializeObject(new DHT22(Temp, Hum));
+                    //產生隨機失敗碼
                     if (x != 2)
                     {
                         result.Code = -4;
                         result.Message = "請再傳送一次";
                         IsVerification = -1;
                     }
-                    Db.AddTaskLog(Account, ClientIP, Data, IsVerification);
+                    //驗證資料正確性
+                    if (Db.ConfirmDataIsRight(TaskID, Account, ClientIP) < 1)
+                    {
+                        result.Code = -5;
+                        result.Message = "請再傳送一次";
+                        IsVerification = -1;
+                    }
+                    Db.AddTaskLog(TaskID, Account, ClientIP, Data, IsVerification);
                     break;
                 case -1:
                     result.Code = -1;

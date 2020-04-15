@@ -14,8 +14,15 @@ namespace IoT_Lib.DBClass
     
     public partial class Task
     {
+        public Task()
+        {
+            this.Task_Log = new HashSet<Task_Log>();
+        }
+    
         public System.Guid ID { get; set; }
         public string EngName { get; set; }
         public string ChsName { get; set; }
+    
+        public virtual ICollection<Task_Log> Task_Log { get; set; }
     }
 }

@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="IoT_ClassModel.Student" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IoT_ClassModel.Task" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IoT_ClassModel.Task_Log" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="IoT_ClassModel.FK_Task_Log_Task" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

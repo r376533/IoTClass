@@ -30,16 +30,33 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TaskID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UpdateTime" Type="datetime" Nullable="false" />
           <Property Name="UpdateStudent" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdateIP" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Data" Type="nvarchar(max)" />
           <Property Name="IsVerification" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Task_Log_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Task_Log" Type="Self.Task_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task_Log">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="IoT_ClassModelStoreContainer">
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task_Log" EntityType="Self.Task_Log" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Task_Log_Task" Association="Self.FK_Task_Log_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Task_Log" EntitySet="Task_Log" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -64,11 +81,16 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="EngName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ChsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Task_Log" Relationship="IoT_ClassModel.FK_Task_Log_Task" FromRole="Task" ToRole="Task_Log" />
         </EntityType>
         <EntityContainer Name="IoT_ClassEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="Task" EntityType="Self.Task" />
           <EntitySet Name="Task_Log" EntityType="IoT_ClassModel.Task_Log" />
+          <AssociationSet Name="FK_Task_Log_Task" Association="IoT_ClassModel.FK_Task_Log_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Task_Log" EntitySet="Task_Log" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Task_Log">
           <Key>
@@ -80,7 +102,21 @@
           <Property Name="UpdateIP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsVerification" Type="Int32" Nullable="false" />
+          <Property Name="TaskID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="IoT_ClassModel.FK_Task_Log_Task" FromRole="Task_Log" ToRole="Task" />
         </EntityType>
+        <Association Name="FK_Task_Log_Task">
+          <End Type="IoT_ClassModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="IoT_ClassModel.Task_Log" Role="Task_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task_Log">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -112,6 +148,7 @@
           <EntitySetMapping Name="Task_Log">
             <EntityTypeMapping TypeName="IoT_ClassModel.Task_Log">
               <MappingFragment StoreEntitySet="Task_Log">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
                 <ScalarProperty Name="IsVerification" ColumnName="IsVerification" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="UpdateIP" ColumnName="UpdateIP" />

@@ -20,5 +20,8 @@ namespace IoT_Lib.DBClass
         public string UpdateIP { get; set; }
         public string Data { get; set; }
         public int IsVerification { get; set; }
+        public System.Guid TaskID { get; set; }
+    
+        public virtual Task Task { get; set; }
     }
 }
