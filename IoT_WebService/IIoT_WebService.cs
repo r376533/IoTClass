@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -60,6 +62,7 @@ namespace IoT_WebService
         ExecuteResult GetTaskLog(string Account,string Password,string TaskID);
         #endregion
 
+
     }
 
 
@@ -71,6 +74,6 @@ namespace IoT_WebService
         [DataMember]
         public string Message { get; set; } = "正常執行";
         [DataMember]
-        public string Result;
+        public string Result = "";
     }
 }
