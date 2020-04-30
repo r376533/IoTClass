@@ -12,6 +12,9 @@ namespace IoT_Lib.DBClass
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class IoT_ClassEntities : DbContext
     {
@@ -28,5 +31,12 @@ namespace IoT_Lib.DBClass
         public DbSet<Student> Student { get; set; }
         public DbSet<Task> Task { get; set; }
         public DbSet<Task_Log> Task_Log { get; set; }
+        public DbSet<RFID> RFID { get; set; }
+        public DbSet<sysdiagrams> sysdiagrams { get; set; }
+    
+        public virtual int usp_getGroup()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_getGroup");
+        }
     }
 }

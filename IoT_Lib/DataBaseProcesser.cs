@@ -135,5 +135,43 @@ namespace IoT_Lib
             Result = db.Task_Log.Where(m => m.TaskID == TaskID && m.UpdateStudent == Account && m.IsVerification > 0).ToList();
             return Result;
         }
+
+        public bool SetRFID(string Account,string RFIDTag) 
+        {
+            bool Result = true;
+            try 
+            {
+                var Datas = db.RFID.Find(Account);
+                if (Datas != null)
+                {
+                    Datas.RFIDTagID = RFIDTag;
+                }
+                else
+                {
+                    RFID newData = new RFID() { StudentID = Account, RFIDTagID = RFIDTag };
+                    Student stu = db.Student.Where(m => m.ID == Account).FirstOrDefault();
+                    newData.Student = stu;
+                    db.RFID.Add(newData);
+                }
+                db.SaveChanges();
+            } 
+            catch(Exception ex) 
+            {
+                
+                Result = false;
+            }
+            return Result;
+        }
+
+        public Student GetStudentByRFID(string RFIDTag) 
+        {
+            Student Result = null ;
+            RFID RFIDData = db.RFID.Where(m => m.RFIDTagID == RFIDTag).FirstOrDefault();
+            if (RFIDData != null && !String.IsNullOrEmpty(RFIDData.StudentID)) 
+            {
+                Result = RFIDData.Student;
+            }
+            return Result;
+        }
     }
 }

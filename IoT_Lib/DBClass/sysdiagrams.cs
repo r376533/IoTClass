@@ -12,21 +12,12 @@ namespace IoT_Lib.DBClass
     using System;
     using System.Collections.Generic;
     
-    public partial class Student
+    public partial class sysdiagrams
     {
-        public Student()
-        {
-            this.RFID = new HashSet<RFID>();
-        }
-    
-        public string ID { get; set; }
-        public int Year { get; set; }
-        public int GroupID { get; set; }
-        public string Name { get; set; }
-        public string PassWord { get; set; }
-        public string RaspBerryID { get; set; }
-        public bool IsEnabel { get; set; }
-    
-        public virtual ICollection<RFID> RFID { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

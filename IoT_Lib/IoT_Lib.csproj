@@ -67,7 +67,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IoT_Class.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DBClass\RFID.cs">
+      <DependentUpon>IoT_Class.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBClass\Student.cs">
+      <DependentUpon>IoT_Class.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBClass\sysdiagrams.cs">
       <DependentUpon>IoT_Class.tt</DependentUpon>
     </Compile>
     <Compile Include="DBClass\Task.cs">

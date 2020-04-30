@@ -9,7 +9,6 @@
 
 namespace IoT_Lib.DBClass
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -22,8 +21,7 @@ namespace IoT_Lib.DBClass
         public string Data { get; set; }
         public int IsVerification { get; set; }
         public System.Guid TaskID { get; set; }
-
-        [JsonIgnore]
+    
         public virtual Task Task { get; set; }
     }
 }

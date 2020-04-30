@@ -9,7 +9,6 @@
 
 namespace IoT_Lib.DBClass
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -24,7 +23,6 @@ namespace IoT_Lib.DBClass
         public string EngName { get; set; }
         public string ChsName { get; set; }
     
-        [JsonIgnore]
         public virtual ICollection<Task_Log> Task_Log { get; set; }
     }
 }

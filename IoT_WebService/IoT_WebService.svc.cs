@@ -217,6 +217,69 @@ namespace IoT_WebService
         #endregion
 
 
+        #region RFID
+        public ExecuteResult RegRFIDCard(string Account, string Password, string RFIDTagID)
+        {
+            ExecuteResult result = new ExecuteResult();
+            DataBaseProcesser Db = new DataBaseProcesser();
+            switch (Db.LogIn(Account, Password))
+            {
+                case 1:
+                    //正常
+                    if (RFIDTagID.Trim().Length == 10)
+                    {
+                        bool AddResult = Db.SetRFID(Account, RFIDTagID);
+                        if (AddResult) 
+                        {
+                            result.Code = 1;
+                            result.Message = "執行成功";
+                        }
+                        else
+                        {
+                            result.Code = -4;
+                            result.Message = "執行失敗，請檢查ID格式是否正確";
+                        }
+                    }
+                    else 
+                    {
+                        result.Code = -3;
+                        result.Message = "RFID 格式錯誤";
+                    }
+                    break;
+                case -1:
+                    result.Code = -1;
+                    result.Message = "無此帳號";
+                    break;
+                case -2:
+                    result.Code = -2;
+                    result.Message = "密碼錯誤";
+                    break;
+            }
+            return result;
+        }
+
+        public ExecuteResult AddRFIDTask(string RFIDTagID)
+        {
+            ExecuteResult result = new ExecuteResult();
+            DataBaseProcesser Db = new DataBaseProcesser();
+            Student student = Db.GetStudentByRFID(RFIDTagID);
+            if (result != null && !String.IsNullOrEmpty(student.ID))
+            {
+                Guid TaskID = Guid.Parse("ea0c09d8-2c1c-4863-a897-4209aab02765");
+                Db.AddTaskLog(TaskID, student.ID, "", RFIDTagID, 1);
+            }
+            else 
+            {
+                result.Code = -1;
+                result.Message = "無此資料";
+            }
+            return result;
+        }
+        #endregion
+
+
+
+
         private string GetClientIP() 
         {
             string IP = "";
@@ -237,8 +300,6 @@ namespace IoT_WebService
             }
             return IP;
         }
-
-        
 
         
     }
