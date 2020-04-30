@@ -16,7 +16,5 @@ namespace IoT_Lib.DBClass
     {
         public string StudentID { get; set; }
         public string RFIDTagID { get; set; }
-    
-        public virtual Student Student { get; set; }
     }
 }

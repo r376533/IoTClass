@@ -54,18 +54,6 @@
           <Property Name="Data" Type="nvarchar(max)" />
           <Property Name="IsVerification" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_RFID_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
-          <End Role="RFID" Type="Self.RFID" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RFID">
-              <PropertyRef Name="RFIDTagID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Task_Log_Task">
           <End Role="Task" Type="Self.Task" Multiplicity="1" />
           <End Role="Task_Log" Type="Self.Task_Log" Multiplicity="*" />
@@ -85,10 +73,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task_Log" EntityType="Self.Task_Log" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_RFID_Student" Association="Self.FK_RFID_Student">
-            <End Role="Student" EntitySet="Student" />
-            <End Role="RFID" EntitySet="RFID" />
-          </AssociationSet>
           <AssociationSet Name="FK_Task_Log_Task" Association="Self.FK_Task_Log_Task">
             <End Role="Task" EntitySet="Task" />
             <End Role="Task_Log" EntitySet="Task_Log" />
@@ -98,19 +82,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IoT_ClassModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityType Name="Student">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="GroupID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RaspBerryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsEnabel" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RFID" Relationship="IoT_ClassModel.FK_RFID_Student" FromRole="Student" ToRole="RFID" />
-        </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="ID" />
@@ -121,20 +92,16 @@
           <NavigationProperty Name="Task_Log" Relationship="IoT_ClassModel.FK_Task_Log_Task" FromRole="Task" ToRole="Task_Log" />
         </EntityType>
         <EntityContainer Name="IoT_ClassEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="Task" EntityType="Self.Task" />
           <EntitySet Name="Task_Log" EntityType="IoT_ClassModel.Task_Log" />
           <AssociationSet Name="FK_Task_Log_Task" Association="IoT_ClassModel.FK_Task_Log_Task">
             <End Role="Task" EntitySet="Task" />
             <End Role="Task_Log" EntitySet="Task_Log" />
           </AssociationSet>
-          <EntitySet Name="RFID" EntityType="IoT_ClassModel.RFID" />
           <EntitySet Name="sysdiagrams" EntityType="IoT_ClassModel.sysdiagrams" />
           <FunctionImport Name="usp_getGroup" />
-          <AssociationSet Name="FK_RFID_Student" Association="IoT_ClassModel.FK_RFID_Student">
-            <End Role="Student" EntitySet="Student" />
-            <End Role="RFID" EntitySet="RFID" />
-          </AssociationSet>
+          <EntitySet Name="RFID" EntityType="IoT_ClassModel.RFID" />
+          <EntitySet Name="Student" EntityType="IoT_ClassModel.Student" />
         </EntityContainer>
         <EntityType Name="Task_Log">
           <Key>
@@ -161,14 +128,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="RFID">
-          <Key>
-            <PropertyRef Name="StudentID" />
-          </Key>
-          <Property Name="StudentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RFIDTagID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Student" Relationship="IoT_ClassModel.FK_RFID_Student" FromRole="RFID" ToRole="Student" />
-        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -179,37 +138,31 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_RFID_Student">
-          <End Type="IoT_ClassModel.Student" Role="Student" Multiplicity="1" />
-          <End Type="IoT_ClassModel.RFID" Role="RFID" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RFID">
-              <PropertyRef Name="RFIDTagID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="RFID">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RFIDTagID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RaspBerryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnabel" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IoT_ClassModelStoreContainer" CdmEntityContainer="IoT_ClassEntities">
-          <EntitySetMapping Name="Student">
-            <EntityTypeMapping TypeName="IoT_ClassModel.Student">
-              <MappingFragment StoreEntitySet="Student">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="RaspBerryID" ColumnName="RaspBerryID" />
-                <ScalarProperty Name="IsEnabel" ColumnName="IsEnabel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Task">
             <EntityTypeMapping TypeName="IoT_ClassModel.Task">
               <MappingFragment StoreEntitySet="Task">
@@ -232,14 +185,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RFID">
-            <EntityTypeMapping TypeName="IoT_ClassModel.RFID">
-              <MappingFragment StoreEntitySet="RFID">
-                <ScalarProperty Name="RFIDTagID" ColumnName="RFIDTagID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="IoT_ClassModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -252,6 +197,27 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_getGroup" FunctionName="IoT_ClassModel.Store.usp_getGroup" />
+          <EntitySetMapping Name="RFID">
+            <EntityTypeMapping TypeName="IoT_ClassModel.RFID">
+              <MappingFragment StoreEntitySet="RFID">
+                <ScalarProperty Name="RFIDTagID" ColumnName="RFIDTagID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="IoT_ClassModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="IsEnabel" ColumnName="IsEnabel" />
+                <ScalarProperty Name="RaspBerryID" ColumnName="RaspBerryID" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

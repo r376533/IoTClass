@@ -148,9 +148,9 @@ namespace IoT_Lib
                 }
                 else
                 {
-                    RFID newData = new RFID() { StudentID = Account, RFIDTagID = RFIDTag };
-                    Student stu = db.Student.Where(m => m.ID == Account).FirstOrDefault();
-                    newData.Student = stu;
+                    RFID newData = new RFID();
+                    newData.StudentID = Account;
+                    newData.RFIDTagID = RFIDTag;
                     db.RFID.Add(newData);
                 }
                 db.SaveChanges();
@@ -169,7 +169,7 @@ namespace IoT_Lib
             RFID RFIDData = db.RFID.Where(m => m.RFIDTagID == RFIDTag).FirstOrDefault();
             if (RFIDData != null && !String.IsNullOrEmpty(RFIDData.StudentID)) 
             {
-                Result = RFIDData.Student;
+                Result = db.Student.Where(m => m.ID==RFIDData.StudentID).FirstOrDefault();
             }
             return Result;
         }

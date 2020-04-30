@@ -258,7 +258,7 @@ namespace IoT_WebService
             return result;
         }
 
-        public ExecuteResult AddRFIDTask(string RFIDTagID)
+        public ExecuteResult AddRFIDTask(string RFIDTagID, string Data)
         {
             ExecuteResult result = new ExecuteResult();
             DataBaseProcesser Db = new DataBaseProcesser();
@@ -266,7 +266,7 @@ namespace IoT_WebService
             if (result != null && !String.IsNullOrEmpty(student.ID))
             {
                 Guid TaskID = Guid.Parse("ea0c09d8-2c1c-4863-a897-4209aab02765");
-                Db.AddTaskLog(TaskID, student.ID, "", RFIDTagID, 1);
+                Db.AddTaskLog(TaskID, student.ID, "", Data, 1);
             }
             else 
             {

@@ -68,8 +68,8 @@ namespace IoT_WebService
         ExecuteResult RegRFIDCard(string Account, string Password, string RFIDTagID);
 
         [OperationContract]
-        [WebGet(UriTemplate = "AddRFIDTask/{RFIDTagID}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        ExecuteResult AddRFIDTask(string RFIDTagID);
+        [WebGet(UriTemplate = "AddRFIDTask/{RFIDTagID}/{Data}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ExecuteResult AddRFIDTask(string RFIDTagID,string Data);
 
         #endregion
 

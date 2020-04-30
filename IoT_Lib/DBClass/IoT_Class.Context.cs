@@ -28,11 +28,11 @@ namespace IoT_Lib.DBClass
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Student> Student { get; set; }
         public DbSet<Task> Task { get; set; }
         public DbSet<Task_Log> Task_Log { get; set; }
-        public DbSet<RFID> RFID { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public DbSet<RFID> RFID { get; set; }
+        public DbSet<Student> Student { get; set; }
     
         public virtual int usp_getGroup()
         {

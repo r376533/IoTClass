@@ -5,13 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="03b18a54bb794dadb34cd32f0df58472" Name="Diagram1">
-        <EntityTypeShape EntityType="IoT_ClassModel.Student" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IoT_ClassModel.Task" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="IoT_ClassModel.Task_Log" Width="1.5" PointX="3.375" PointY="3.75" />
         <AssociationConnector Association="IoT_ClassModel.FK_Task_Log_Task" />
-        <EntityTypeShape EntityType="IoT_ClassModel.RFID" Width="1.5" PointX="1" PointY="4.625" />
         <EntityTypeShape EntityType="IoT_ClassModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
-        <AssociationConnector Association="IoT_ClassModel.FK_RFID_Student" />
+        <EntityTypeShape EntityType="IoT_ClassModel.RFID" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IoT_ClassModel.Student" Width="1.5" PointX="0.75" PointY="1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

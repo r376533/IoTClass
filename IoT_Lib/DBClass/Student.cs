@@ -14,11 +14,6 @@ namespace IoT_Lib.DBClass
     
     public partial class Student
     {
-        public Student()
-        {
-            this.RFID = new HashSet<RFID>();
-        }
-    
         public string ID { get; set; }
         public int Year { get; set; }
         public int GroupID { get; set; }
@@ -26,7 +21,5 @@ namespace IoT_Lib.DBClass
         public string PassWord { get; set; }
         public string RaspBerryID { get; set; }
         public bool IsEnabel { get; set; }
-    
-        public virtual ICollection<RFID> RFID { get; set; }
     }
 }
